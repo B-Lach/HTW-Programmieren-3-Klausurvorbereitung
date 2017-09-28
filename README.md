@@ -19,6 +19,7 @@ public enum Fahrzeug {
 // }
 ```
 
+Nicht erlaubt sind s
 ## Standard-Methoden
 
 ### Statisch
@@ -121,3 +122,191 @@ Beispiel, wie in der POM.xml Dependencies hinzugefügt werden. Genauer wird hier
 </project>
 ```
 
+# Collections
+
+Sind Klassem, die als "Behälter" für mehrere Objekte fungieren
+
+In der Standardbibliothek sind unter anderem:
+
+* List
+* Set
+* Map
+
+## List
+
+Dabei handelt es sich um eine lineare Datenstruktur. Objekte werden hintereinander in fester Reihenfolge gespeichert, ähnlich zu Array.
+
+Ist die Reiehenfolge der Elemente von Relevanz oder können Elemente doppelt vorkommen? => List
+
+### ArrayList
+
+Wie ein Array, nur ohne Begrenzung - wächst dynamisch durch einfügen neuer Elemente. 
+
+###### Vorteile
+* schneller Zugriff auf einzelne Elemente
+
+###### Nachteile
+* Hinzufügen/Löschen langsam
+
+### Codebeispiele
+
+###### Deklaration und Instanziierung
+```java
+// Deklaration
+List<String> liste;
+// oder
+LinkedList<String> list;
+
+// Instanziierung
+liste = new LinkedList<String>; // hier muss konkrete Klasse angegeben werden
+```
+
+###### Einfügen und Löschen
+
+```java
+// Am Ende anfügen
+liste.add(element);
+
+// An index einfügen
+liste.add(index, element);
+
+// Löscht Element an der Stelle, an der es zuerst gefunden wurde
+liste.remove(element);
+// Löscht Element an angegebenen index
+liste.remove(index);
+``` 
+
+###### Direkter Zugriff
+
+```java
+// Gibt Anzahl der Elemente zurück
+liste.size();
+
+// Gibt Element an Position index zurück
+// Wirft IndexOutOfBoundsException wenn  0 > index > liste.size() - 1
+liste.get(index); 
+
+// Setzt neues Element an der Stelle index
+// Wirft IndexOutOfBoundsException wenn  0 > index > liste.size() - 1
+liste.set(index, element);
+
+```
+
+### LinkedList
+
+Verkettete Liste, in dem jedes Element auf das nächste verweist.
+
+###### Vorteile
+* Einfügen/Löschen in der Mitte relativ schnell
+
+###### Nachteile
+* Direkte Zugriff auf einzelne Elemente langsam
+
+## Set
+
+Dabei handelt es sich um eine Menge. Die Reihenfolge der Elemente ist beliebig, jedoch kann jedes Element nur einmal vorkommen
+
+Ist die Reihenfolge der Elemente egal oder können Elemente nur einmal vorkommen? => Set
+
+### HashSet
+Generiert intern auf mit geerbten ```Object.hashCode()``` Methode Hashes, um die Elemente abzuspeichern. 
+
+######  Vorteile
+* Löschen / Einfügen sehr schnell
+
+### TreeSet
+
+Speichert Elemente in Baumstruktur, wodurch die Elemente automatisch sortiert werden. 
+Bedingung ist, dass zu speichernde Elemente das Interface ```Comparable<E>``` implementieren
+
+## Map
+
+Dabei handelt es sich um eine assoziative Datenstruktur. Zu jedem Objekt wird ein identifizierender Schlüssel (Key) gespeichert. Der Zugriff auf ein bestimmtes Objekt überfolgt über den definierten Key.
+
+Gibt es zu jedem Element einen eindeutigen Schlüssel? => Map
+
+### HashMap
+
+Für den Key wird intern ein Hash generiert, auf dessen Basis die Speicherreihenfolge festgelegt wird.
+
+### TreeMap
+
+Schlüssel werden sortiert in einer Baumstruktur gespeichert.
+
+### Properties
+
+Key-Value-Pairs vom Element String. Gedacht für die Speicherung von Systemeigenschaften. 
+
+### Code-Beispiele
+
+###### Deklaration
+
+```java
+HashMap<String, BigDecimal> map;
+// oder
+Map<String, BigDecimal> map;
+```
+
+###### Instanziierung
+
+```java
+map = new HashMap<String, BigDecimal>();
+```
+
+
+###### Einfügen und Löschen
+
+```java
+// Fügt für angegebenen Key definierte Value ein
+// Überschreibt bereits vorhandenen Wert für angegebenen Schlüssel
+map.put(key, value);
+
+// Löschen des Elementes für angegebenen Key
+map.remove(key);
+``` 
+
+###### Direkter Zugriff
+
+```java
+// Gibt Anzahl der Elemente zurück
+map.size();
+
+// Gibt Element für angegebenen Schlüssel zurück
+// Wenn Key nicht vorhanden wird null zurückgegeben
+map.get(key); 
+
+// Testet ob key in der Map vorhanden ist
+map.containsKey(key); // true || false
+// Testet ob value in der Map vorhanden ist
+map.containsValue(value); // true || false
+
+```
+
+## Erweiterte for-Schleife
+
+Erweiterte Vorschleife funktioniert bei allen Klassen, die Iterable implementieren + Array
+
+```java
+for(String s: liste) {
+	// mach was
+}
+```
+
+## Iterator
+
+Sind "Zeiger" auf in einer Collectino gespeichertes Element. Enthalten ebenso Info über nächstes Element-
+
+Die erweiterte for-Schleife nutzt intern ebenso einen Iterator. 
+
+```java
+	// for(String s: liste) {} entspricht:
+
+	Iterator<String> i = liste.iterator();
+	// Check ob am Ende angekommen
+	while(i.hasNext()) {
+		String t = i.next();
+		// Mach was mit t
+		// i.next() gibt das Element an der aktuellen Position des Zeigers zurück
+		// und bewegt den Zeiger auf das nächte Element
+	}
+```
